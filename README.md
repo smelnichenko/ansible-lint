@@ -6,6 +6,7 @@ Custom `ansible-lint` image with the project's collections preinstalled, used by
 
 - `ansible-lint`
 - `hvac` (Vault module)
+- `git` (ops's unit tests drive git repositories)
 - Collections: `community.hashi_vault`, `community.general`, `kubernetes.core`, `gluster.gluster`
 
 ## Usage
