@@ -1,7 +1,8 @@
 FROM python:3.13-slim
 # git: ops's unit tests drive its upgrade scripts' merges and tags in throwaway repositories; jq: the scripts some of
-# them run (create-environment's seed of Vault) parse JSON with it
-RUN apt-get update && apt-get install -y --no-install-recommends git jq && rm -rf /var/lib/apt/lists/*
+# them run (create-environment's seed of Vault) parse JSON with it; gnupg, file, curl: the apt-key-pinned test makes keys
+# and checks a dearmored keyring, fetched as the task fetches it (deploy/ansible/playbooks/tasks/apt-key-pinned.yml)
+RUN apt-get update && apt-get install -y --no-install-recommends git jq gnupg file curl && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir ansible-lint hvac && \
     ansible-galaxy collection install \
