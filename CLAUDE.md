@@ -6,7 +6,7 @@ Custom `ansible-lint` image with the project's collections preinstalled. Used by
 
 `git.pmon.dev/schnappy/ansible-lint:latest`
 
-Base: `python:3.13-slim` + `git` + `jq` + `ansible-lint` + `hvac` + collections:
+Base: `python:3.13-slim` + `git` + `jq` + `gnupg` + `file` + `curl` + `lua5.1` + `ruby` + `ansible-lint` + `hvac` + collections:
 
 - `ansible.posix` (ops's `ansible.builtin.mount` and `synchronize` resolve to it)
 - `community.hashi_vault`
