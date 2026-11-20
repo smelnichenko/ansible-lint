@@ -10,9 +10,15 @@ FROM python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e
 RUN apt-get update && apt-get install -y --no-install-recommends git jq gnupg file curl lua5.1 ruby && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir ansible-lint==26.9.0 ansible-compat==26.9.0 ansible-core==2.21.5 hvac==2.4.0 && \
-    ansible-galaxy collection install \
+    ansible-galaxy collection install -p /usr/share/ansible/collections \
         ansible.posix:==2.2.2 \
         community.hashi_vault:==7.1.0 \
         community.general:==13.5.0 \
         kubernetes.core:==6.6.0 \
         gluster.gluster:==1.0.2
+# Readable by any user (plan 128, CI steps non-root): the collections in Ansible's system-wide path, not root's home
+# (/root is 0700 - a non-root step found none); and a user of its own, uid 1000, so `id -un` names it and it has a
+# home (ops's git-mirror harness skipped its real sync runs for a nameless uid). The image does not switch to it: each
+# pipeline step sets its user (backend_options.kubernetes.securityContext)
+RUN useradd --uid 1000 --user-group --create-home --shell /bin/bash ci
+

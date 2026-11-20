@@ -14,6 +14,8 @@ Base: `python:3.13-slim` + `git` + `jq` + `gnupg` + `file` + `curl` + `lua5.1` +
 - `kubernetes.core`
 - `gluster.gluster`
 
+The collections live in `/usr/share/ansible/collections` (readable by any user), and the image has a uid-1000 user `ci` for steps that run non-root (ops plan 128); it does not switch to it - each pipeline step sets its own user.
+
 If a playbook starts using a new collection, add it here and let Woodpecker rebuild the image — don't `ansible-galaxy install` inside the lint step.
 
 ## Build
