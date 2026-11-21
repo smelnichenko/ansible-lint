@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>schnappy/ops//renovate/apps"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The Python packages the Dockerfile's pip install pins - read by no manager",
+      "managerFilePatterns": [
+        "/(^|/)Dockerfile$/"
+      ],
+      "matchStrings": [
+        "(?<depName>ansible-lint|ansible-compat|ansible-core|hvac)==(?<currentValue>\\d[^\\s\\\\]*)"
+      ],
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "description": "The Ansible collections the Dockerfile's ansible-galaxy install pins",
+      "managerFilePatterns": [
+        "/(^|/)Dockerfile$/"
+      ],
+      "matchStrings": [
+        "(?<depName>[a-z0-9_]+\\.[a-z0-9_]+):==(?<currentValue>\\d[^\\s\\\\]*)"
+      ],
+      "datasourceTemplate": "galaxy-collection"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "No pull-request CI here, and every version in this image moves alone, run against ops's whole unit suite first (the Dockerfile's header) - never merged by Renovate",
+      "matchPackageNames": [
+        "*"
+      ],
+      "automerge": false
+    }
+  ]
+}
