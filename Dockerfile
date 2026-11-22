@@ -1,7 +1,7 @@
 # Every version pinned (2026-11-13): unpinned, a rebuild for one apt package took ansible-core 2.21.5 -> 2.22.0 and
 # two of ops's unit harnesses failed on it. These are the versions the image held then (CI green on them); a move of
 # any of them is its own change, run against ops's whole unit suite first.
-FROM python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+FROM python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90
 # git: ops's unit tests drive its upgrade scripts' merges and tags in throwaway repositories; jq: the scripts some of
 # them run (create-environment's seed of Vault) parse JSON with it; gnupg, file, curl: the apt-key-pinned test makes keys
 # and checks a dearmored keyring, fetched as the task fetches it (deploy/ansible/playbooks/tasks/apt-key-pinned.yml);
